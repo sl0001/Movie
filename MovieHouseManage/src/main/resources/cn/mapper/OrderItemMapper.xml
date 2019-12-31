@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.mapper.OrderItemMapper" >
+  <resultMap id="BaseResultMap" type="cn.entity.OrderItem" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="oid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="roomName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ticketInfo" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cinemaName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="seatInfo" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, oid, roomName, ticketInfo, cinemaName, seatInfo
+  </sql>
+  <select id="selectByOrderId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_orderitem
+    where oid = #{orderId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_orderitem
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_orderitem
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.entity.OrderItem" >
+    insert into t_orderitem (id, oid, roomName, 
+      ticketInfo, cinemaName, seatInfo
+      )
+    values (#{id,jdbcType=INTEGER}, #{oid,jdbcType=INTEGER}, #{roomname,jdbcType=VARCHAR}, 
+      #{ticketinfo,jdbcType=VARCHAR}, #{cinemaname,jdbcType=VARCHAR}, #{seatinfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.entity.OrderItem" >
+    insert into t_orderitem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="roomname != null" >
+        roomName,
+      </if>
+      <if test="ticketinfo != null" >
+        ticketInfo,
+      </if>
+      <if test="cinemaname != null" >
+        cinemaName,
+      </if>
+      <if test="seatinfo != null" >
+        seatInfo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="oid != null" >
+        #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="roomname != null" >
+        #{roomname,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketinfo != null" >
+        #{ticketinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="cinemaname != null" >
+        #{cinemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="seatinfo != null" >
+        #{seatinfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.entity.OrderItem" >
+    update t_orderitem
+    <set >
+      <if test="oid != null" >
+        oid = #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="roomname != null" >
+        roomName = #{roomname,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketinfo != null" >
+        ticketInfo = #{ticketinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="cinemaname != null" >
+        cinemaName = #{cinemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="seatinfo != null" >
+        seatInfo = #{seatinfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.entity.OrderItem" >
+    update t_orderitem
+    set oid = #{oid,jdbcType=INTEGER},
+      roomName = #{roomname,jdbcType=VARCHAR},
+      ticketInfo = #{ticketinfo,jdbcType=VARCHAR},
+      cinemaName = #{cinemaname,jdbcType=VARCHAR},
+      seatInfo = #{seatinfo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
