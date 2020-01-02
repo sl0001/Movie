@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 配置扫描包  -->
+    <context:component-scan base-package="cn"/>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/order/buySeat"/>
+            <bean class="cn.interceptor.MyInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!-- 加载注解  -->
+    <mvc:annotation-driven/>
+    <!-- 配置视图-->
+    <mvc:view-controller path="/seat" view-name="SeatNumber"/>
+    <mvc:view-controller path="/loginUI" view-name="loginUser"/>
+    <mvc:view-controller path="/registerUI" view-name="registerUI"/>
+    <mvc:view-controller path="/file" view-name="FilmBackstage"/>
+    <mvc:view-controller path="/filmInfo" view-name="Filminfo"/>
+    <mvc:view-controller path="/mainUI" view-name="FilmMain"/>
+    <mvc:view-controller path="/cinema" view-name="cinemaTest"/>
+    <mvc:view-controller path="/record" view-name="recordTest"/>
+    <mvc:view-controller path="/room" view-name="CinemaInfo"/>
+    <mvc:view-controller path="/chooseFilm" view-name="ChooseFilm"/>
+    <mvc:view-controller path="/chooseCinema" view-name="ChooseCinema"/>
+
+    <mvc:resources mapping="/js/**" location="/js/"/>
+    <mvc:resources mapping="/cn/**" location="/cn/controller"/>
+    <mvc:resources mapping="/movieImg/**" location="/movieImg/"/>
+    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:default-servlet-handler/>
+    <!-- 配置视图解析器,作用是配置目录前缀和文件后缀，然后解析为一个资源文件 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+</beans>
