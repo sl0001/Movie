@@ -1,8 +1,10 @@
 package cn.service.impl;
 
 import cn.entity.Cinema;
+import cn.entity.CinemaBand;
 import cn.entity.Record;
 import cn.entity.Room;
+import cn.mapper.CinemaBandMapper;
 import cn.mapper.CinemaMapper;
 import cn.mapper.RecordMapper;
 import cn.mapper.RoomMapper;
@@ -19,15 +21,23 @@ public class CinemaServiceImpl implements CinemaService {
     private RoomMapper roomMapper;
     @Autowired
     private RecordMapper recordMapper;
+    @Autowired
+    private CinemaBandMapper cinemaBandMapper;
     @Override
     public List<Cinema> getAllCinema() {
         return cinemaMapper.selectAll();
     }
 
     @Override
+    public List<Cinema> getCinemaByName(String name,Integer addressId) {
+        return cinemaMapper.selectByNameAddressId(name,addressId);
+    }
+
+    @Override
     public List<Cinema> getCinemaByName(String name) {
         return cinemaMapper.selectByName(name);
     }
+
 
     @Override
     public List<Cinema> getCinemaByAddressId(Integer addressId) {
@@ -62,6 +72,16 @@ public class CinemaServiceImpl implements CinemaService {
     @Override
     public List<Record> getByInfo(Integer filmId, Integer cinemaId, Integer roomId) {
         return recordMapper.selectByInfo(filmId,cinemaId,roomId);
+    }
+
+    @Override
+    public List<CinemaBand> getAll() {
+        return cinemaBandMapper.selectAll();
+    }
+
+    @Override
+    public List<CinemaBand> getByAddressId(Integer id) {
+        return cinemaBandMapper.selectByAddressId(id);
     }
 
 }

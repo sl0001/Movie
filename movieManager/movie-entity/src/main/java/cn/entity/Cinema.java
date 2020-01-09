@@ -108,4 +108,18 @@ public class Cinema {
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
+
+    @Override
+    public String toString() {
+        return "Cinema{" +
+                "id=" + id +
+                ", cinemaname='" + cinemaname + '\'' +
+                ", address='" + address + '\'' +
+                ", tel='" + tel + '\'' +
+                ", addressid=" + addressid +
+                ", intro='" + intro + '\'' +
+                ", imgurl='" + imgurl + '\'' +
+                ", rooms=" + rooms +
+                '}';
+    }
 }

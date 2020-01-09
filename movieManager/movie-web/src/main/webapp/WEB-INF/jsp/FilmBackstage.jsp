@@ -34,19 +34,19 @@
                 </dl>
             </li>
         </ul>
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    贤心
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item"><a href="">退了</a></li>
-        </ul>
+<%--        <ul class="layui-nav layui-layout-right">--%>
+<%--            <li class="layui-nav-item">--%>
+<%--                <a href="javascript:;">--%>
+<%--                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">--%>
+<%--                    贤心--%>
+<%--                </a>--%>
+<%--                <dl class="layui-nav-child">--%>
+<%--                    <dd><a href="">基本资料</a></dd>--%>
+<%--                    <dd><a href="">安全设置</a></dd>--%>
+<%--                </dl>--%>
+<%--            </li>--%>
+<%--            <li class="layui-nav-item"><a href="">退了</a></li>--%>
+<%--        </ul>--%>
     </div>
 
     <div class="layui-side layui-bg-black">
@@ -82,10 +82,11 @@
                 <li class="layui-this" lay-id="11">添加电影</li>
                 <li lay-id="22" class="addcinema">添加影院</li>
                 <li lay-id="33" id="select22">查询电影</li>
-                <li lay-id="44">商品管理</li>
-                <li lay-id="55">订单管理</li>
+                <li lay-id="44" id="selectCinema">查询影院</li>
+                <li lay-id="55" id="selectUser">查询用户</li>
             </ul>
             <div class="layui-tab-content">
+                <%--添加电影  --%>
                 <div class="layui-tab-item layui-show">
                     <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加电影</h1>
                     <br/>
@@ -194,7 +195,7 @@
                         </form>
                  </div>
             </div>
-<%--                添加电影院--%>
+                <%--添加电影院--%>
                 <div class="layui-tab-item " style="width: 50%">
                     <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加影院</h1>
                     <br/>
@@ -205,7 +206,7 @@
                                 <label class="layui-form-label"> 影院海报：</label>
                                 <div>
                                     <img class="cinemaphoto" style="width: 100px;height: 120px"/>
-                                    <input class="cinamePhotoUrl" name="imgurl" type="text" style="display: none"/>
+                                    <input class="imgurl" name="imgurl" type="text" style="display: none"/>
                                     <br>
                                     <br>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -222,7 +223,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">影院名称</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="cinemaname" required  lay-verify="required" placeholder="请输入电影名" autocomplete="off" class="layui-input">
+                                    <input type="text" name="cinemaname" required  lay-verify="required" placeholder="请输入电影名称" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -233,28 +234,28 @@
 
                                     </select>
                                     行政区:
-                                    <select class="administrative" name="address" lay-ignore="">
-                                      <option disabled>请选择行政区</option>
+                                    <select class="administrative" name="addressid" lay-ignore="">
+                                      <option>请选择行政区</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">详细地址</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="address" required  lay-verify="required" placeholder="请输入电影类型" autocomplete="off" class="layui-input">
+                                    <input type="text" name="address" required  lay-verify="required" placeholder="请输入详细地址" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item">
                                 <label class="layui-form-label">联系方式</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="tel" required  lay-verify="required" placeholder="请输入电影区域" autocomplete="off" class="layui-input">
+                                    <input type="text" name="tel" required  lay-verify="required" placeholder="请输入联系方式" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
-                            <div class="layui-form-item">
+                            <div class="layui-form-item layui-form-text">
                                 <label class="layui-form-label">影院简介</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="language" required  lay-verify="required" placeholder="请输入语言版本" autocomplete="off" class="layui-input">
+                                    <textarea name="intro" placeholder="请输入内容" class="layui-textarea"></textarea>
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -266,17 +267,21 @@
                         </form>
                     </div>
                 </div>
-
-
+                <%--查询电影--%>
                 <div class="layui-tab-item" id="select">
-                    <form name="form_selectFilm" id="form_selectFilm" class="layui-form" style="margin-top: 20px" method="post" >
+
+                    <br/>
+                    <br/>
+                    <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查询电影</h1>
+
+                    <form name="form_selectFilm" id="form_selectFilm" class="layui-form" style="margin-top: 20px">
                         <%--条件一：电影名--%>
-                        <input type="text" name="filmname" id="filmname" placeholder="请输入电影名" autocomplete="off" class="layui-input" style="width: 150px;margin-left: 20%;display: inline-block">
+                        <input type="text" id="filmName" placeholder="请输入电影名" autocomplete="off" class="layui-input" style="width: 150px;margin-left: 20%;display: inline-block">
                         <%-- 条件二：电影类型--%>
                         <div class="layui-input-block" style="margin-left: 10px;display: inline-block;width: 200px">
-                            <select name="filmtype" id="filmtype" lay-filter="filmtype">
+                            <select id="filmType" lay-filter="filmType">
                                 <option value="" selected="">请选择电影类型</option>
-                                <option>爱情</option>
+                                <option >爱情</option>
                                 <option>惊悚</option>
                                 <option>武侠</option>
                                 <option>历史</option>
@@ -284,34 +289,36 @@
                                 <option>动画</option>
                                 <option>剧情</option>
                                 <option>恐怖</option>
-                                <option>科幻</option>
+                                <option >科幻</option>
                                 <option>动作</option>
                                 <option>悬疑</option>
                                 <option>犯罪</option>
                                 <option>冒险</option>
-                                <option>战争</option>
-                                <option>奇幻</option>
-                                <option>运动</option>
-                                <option>西部</option>
-                                <option>传记</option>
-                                <option>歌舞</option>
-                                <option>纪录片</option>
+                                <option >战争</option>
+                                <option >奇幻</option>
+                                <option >运动</option>
+                                <option >西部</option>
+                                <option >传记</option>
+                                <option >歌舞</option>
+                                <option >纪录片</option>
                             </select>
                         </div>
                         <%--条件三：电影状态--%>
                         <div class="layui-input-block" style="margin-left: 10px;display: inline-block;width: 200px">
-                            <select name="state" id="state" lay-filter="state">
+                            <select id="state" lay-filter="state">
                                 <option value="" selected="">请选择电影状态</option>
-                                <option value="0">上映</option>
-                                <option value="1">未上映</option>
+                                <option value="1">上映</option>
+                                <option value="0">未上映</option>
                             </select>
                         </div>
 
                         <div class="layui-form-item" style="display: inline-block;margin-left: 15px">
-                            <button id="submit_selectFilm" class="layui-btn" lay-submit="" lay-filter="submit">查询</button>
+                            <input type="button" id="selectbtn" value="查询" style="height: 30px ;width: 50px;"/>
                         </div>
                     </form>
-                    <table class="layui-table" id="table_selectFilm" style="margin-top: 20px">
+
+
+                    <table class="layui-table" style="margin-top: 20px">
                         <thead>
                         <tr>
                             <th style="display: none">ID</th>
@@ -323,46 +330,82 @@
                             <th>票房</th>
                             <th>评分</th>
                             <th>想看量</th>
+                            <th>状态</th>
                             <th>操作</th>
                         </tr>
                         </thead>
-                        <tbody class="tbody">
-                        <c:forEach var="film" items="${films}">
-                            <tr>
-                                <td style="display: none">${film.id}</td>
-                                <td>${film.filmname}</td>
-                                <td>${film.filmtype}</td>
-                                <td>${film.filmarea}</td>
-                                <td>${film.showtime.year}/${film.showtime.month}/${film.showtime.date}</td>
-                                <td>${film.duration}</td>
-                                <td>${film.boxoffice}</td>
-                                <td>${film.filmscore}</td>
-                                <td>${film.expect}</td>
+                        <tbody>
 
-                                <td>
-                                    <a href="">修改</a>
-                                    <a href="">删除</a>
-                                </td>
-
-                            </tr>
-                        </c:forEach>
                         </tbody>
                     </table>
                     <br/>
                     <br/>
-                    <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js"></script>
-                    <script src="${pageContext.request.contextPath}/js/ajaxfileupload.js"></script>
-                    <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
-                    <script type="text/javascript">
-                        //查询数据信息事件
-                        $(function () {
-
-                        }
-                    </script>
                 </div>
-                <div class="layui-tab-item ">内容5</div>
-                <div class="layui-tab-item " >
-                    内容s
+                <div class="layui-tab-item "  >
+                    <br/>
+                    <br/>
+                    <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查询电影院</h1>
+
+                    <form name="form_selectCinema" id="form_selectCinema" class="layui-form" style="margin-top: 20px">
+                        <%--条件：电影院名--%>
+                        <input type="text" id="cinemaname" placeholder="请输入电影院名" autocomplete="off" class="layui-input" style="width: 150px;margin-left: 20%;display: inline-block">
+
+                        <div class="layui-form-item" style="display: inline-block;margin-left: 15px">
+                            <input type="button" id="btn_selectCinema" value="查询" style="height: 30px ;width: 50px;"/>
+                        </div>
+                    </form>
+
+
+                    <table id="table_selectCinema" class="layui-table" style="margin-top: 20px">
+                        <thead>
+                        <tr>
+                            <th style="display: none">ID</th>
+                            <th>电影院名称</th>
+                            <th>详细地址</th>
+                            <th>联系方式</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    <br/>
+                    <br/>
+                </div>
+                <div class="layui-tab-item" >
+
+                    <br/>
+                    <br/>
+                    <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查询用户</h1>
+
+                    <form name="form_selectUser" id="form_selectUser" class="layui-form" style="margin-top: 20px">
+                        <%--条件：用户名--%>
+                        <input type="text" id="username" placeholder="请输入用户名" autocomplete="off" class="layui-input" style="width: 150px;margin-left: 20%;display: inline-block">
+
+                        <div class="layui-form-item" style="display: inline-block;margin-left: 15px">
+                            <input type="button" id="btn_selectUser" value="查询" style="height: 30px ;width: 50px;"/>
+                        </div>
+                    </form>
+
+
+                    <table id="table_selectUser" class="layui-table" style="margin-top: 20px">
+                        <thead>
+                        <tr>
+                            <th style="display: none">ID</th>
+                            <th>用户名</th>
+                            <th>性别</th>
+                            <th>生活状态</th>
+                            <th>生日</th>
+                            <th>联系方式</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    <br/>
+                    <br/>
                 </div>
         </div>
     </div>
@@ -374,19 +417,224 @@
 <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js"></script>
 <script src="${pageContext.request.contextPath}/js/ajaxfileupload.js"></script>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
-<script type="text/javascript">
-    //查询数据信息事件
-    $(function () {
-
-        $("#select22").click(function () {
-           $("div#select").siblings("div").hide()
-            window.location.href="${pageContext.request.contextPath}/film/allFilms";
-        });
-    })
-</script>
 
 <script>
-    $(function () {
+        $(function () {
+            //点击 查询用户标签 信息事件
+            $("#selectUser").click(function () {
+                var url="${pageContext.request.contextPath}/user/allUser"
+                $.post(
+                    url,
+                    function(data){
+                        $("#table_selectUser tbody").html("");
+                        if(data !=null && data.length >0) {
+                            for(var i=0;i< data.length;i++) {
+                                user=data[i]
+                                var obj = "<tr>" +
+                                    "<td style='display: none' id='id'>" + user.id+ "</td>" +
+                                    "<td>" + user.username+ "</td>" +
+                                    "<td >" + user.sex+ "</td>" +
+                                    "<td >" + user.animation+ "</td>" +
+                                    "<td >" + user.bir+ "</td>"+
+                                    "<td>" + user.phone+ "</td>"
+                                "<tr>"
+                                $("#table_selectUser tbody").append(obj);
+                            }
+                        }
+
+                    }
+                )
+            });
+
+            //点击 查询用户 按钮事件
+            $("#btn_selectUser").click(function () {
+                alert(456)
+                var name=$("#form_selectUser #username").val();
+                var url="${pageContext.request.contextPath}/user/selectByName"
+                $.post(
+                    url,
+                    {"name":name},
+                    function(data){
+                        $("#table_selectUser tbody").html("");
+                        if(data !=null && data.length >0) {
+                            for(var i=0;i< data.length;i++) {
+                                user=data[i]
+                                var obj = "<tr>" +
+                                    "<td style='display: none' id='id'>" + user.id+ "</td>" +
+                                    "<td>" + user.username+ "</td>" +
+                                    "<td >" + user.sex+ "</td>" +
+                                    "<td >" + user.animation+ "</td>" +
+                                    "<td >" + user.bir+ "</td>"+
+                                    "<td>" + user.phone+ "</td>"
+                                "<tr>"
+                                $("#table_selectUser tbody").append(obj);
+                            }
+                        }
+
+                    }
+                )
+            });
+
+            //点击 查询电影院标签 信息事件
+            $("#selectCinema").click(function () {
+
+                var url="${pageContext.request.contextPath}/cinema/allCinema"
+                $.post(
+                    url,
+                    function(data){
+                        $("#table_selectCinema tbody").html("");
+                        if(data !=null && data.length >0) {
+                            for(var i=0;i< data.length;i++) {
+                                cinema=data[i]
+                                var obj = "<tr>" +
+                                    "<td style='display: none' id='id'>" + cinema.id+ "</td>" +
+                                    "<td>" + cinema.cinemaname+ "</td>" +
+                                    "<td >" + cinema.address+ "</td>" +
+                                    "<td >" + cinema.tel+ "</td>" +
+                                    " <td> <button id='deleteA'>删除</button></td>"
+                                "<tr>"
+                                $("#table_selectCinema tbody").append(obj);
+                            }
+                        }
+
+                    }
+                )
+            });
+
+            //点击 查询电影院 按钮事件
+            $("#btn_selectCinema").click(function () {
+                var name=$("#form_selectCinema #cinemaname").val();
+                var url="${pageContext.request.contextPath}/cinema/cinemaByName"
+                $.post(
+                    url,
+                    {"name":name},
+                    function(data){
+                        $("#table_selectCinema tbody").html("");
+                        if(data !=null && data.length >0) {
+                            for(var i=0;i< data.length;i++) {
+                                cinema=data[i]
+                                var obj = "<tr>" +
+                                    "<td style='display: none' id='id'>" + cinema.id+ "</td>" +
+                                    "<td>" + cinema.cinemaname+ "</td>" +
+                                    "<td >" + cinema.address+ "</td>" +
+                                    "<td >" + cinema.tel+ "</td>" +
+                                    " <td> <button id='deleteA' onclick='deleteA()'>删除</button></td>"
+                                "<tr>";
+                                $("#table_selectCinema tbody").append(obj);
+                            }
+                        }
+
+                    }
+                )
+            });
+
+        //点击查询信息事件
+        $("#select22").click(function () {
+            var url="${pageContext.request.contextPath}/film/allFilms"
+            $.post(
+                url,
+                function(data){
+                    if(data !=null && data.length >0) {
+                        for(var i=0;i< data.length;i++) {
+                            film=data[i]
+                            if (film.state==1){
+                                var obj = "<tr>" +
+                                    "<td style='display: none'>" + film.id+ "</td>" +
+                                    "<td >" + film.filmname+ "</td>" +
+                                    "<td >" + film.filmtype+ "</td>" +
+                                    "<td >" + film.filmarea+ "</td>" +
+                                    "<td >" + film.time +"</td>" +
+                                    "<td >" + film.duration+ "</td>" +
+                                    "<td >" + film.boxoffice+ "</td>" +
+                                    "<td >" + film.filmscore+ "</td>" +
+                                    "<td >" + film.expect+ "</td>" +
+                                    "<td>上映</td>"+
+                                    " <td> <a href=''>删除</a></td>"
+                                "<tr>"
+                                $("tbody").append(obj);
+                            }else if(film.state ==0)
+                            {
+                                var obj = "<tr>" +
+                                    "<td style='display: none'>" + film.id+ "</td>" +
+                                    "<td >" + film.filmname+ "</td>" +
+                                    "<td >" + film.filmtype+ "</td>" +
+                                    "<td >" + film.filmarea+ "</td>" +
+                                    "<td >" + film.time +"</td>" +
+                                    "<td >" + film.duration+ "</td>" +
+                                    "<td >" + film.boxoffice+ "</td>" +
+                                    "<td >" + film.filmscore+ "</td>" +
+                                    "<td >" + film.expect+ "</td>" +
+                                    "<td>未上映</td>"+
+                                    " <td> <a href=''>删除</a></td>"
+                                "<tr>"
+                                $("tbody").append(obj);
+                            }
+
+                        }
+                    }
+
+                }
+            )
+        });
+
+        //点击查询按钮事件
+        $("#selectbtn").click(function () {
+            var filmname=$("#form_selectFilm #filmName").val();
+            var filmtype=$("#form_selectFilm #filmType").val();
+            var state=$("#form_selectFilm #state").val();
+            var url="${pageContext.request.contextPath}/film/filmsByCondition2"
+            $.post(
+                url,
+                {"filmname":filmname,"filmtype":filmtype,"state":state},
+                function(data){
+                    $("tbody").html("");
+                    if(data !=null && data.length >0) {
+                        for(var i=0;i< data.length;i++) {
+                            film=data[i]
+                            if (film.state==1){
+                                var obj = "<tr>" +
+                                    "<td style='display: none'>" + film.id+ "</td>" +
+                                    "<td >" + film.filmname+ "</td>" +
+                                    "<td >" + film.filmtype+ "</td>" +
+                                    "<td >" + film.filmarea+ "</td>" +
+                                    "<td >" + film.time +"</td>" +
+                                    "<td >" + film.duration+ "</td>" +
+                                    "<td >" + film.boxoffice+ "</td>" +
+                                    "<td >" + film.filmscore+ "</td>" +
+                                    "<td >" + film.expect+ "</td>" +
+                                    "<td>上映</td>"+
+                                    " <td> <a href=''>删除</a></td>"
+                                "<tr>"
+                                $("tbody").append(obj);
+                            }else if(film.state ==0)
+                            {
+                                var obj = "<tr>" +
+                                    "<td style='display: none'>" + film.id+ "</td>" +
+                                    "<td >" + film.filmname+ "</td>" +
+                                    "<td >" + film.filmtype+ "</td>" +
+                                    "<td >" + film.filmarea+ "</td>" +
+                                    "<td >" + film.time +"</td>" +
+                                    "<td >" + film.duration+ "</td>" +
+                                    "<td >" + film.boxoffice+ "</td>" +
+                                    "<td >" + film.filmscore+ "</td>" +
+                                    "<td >" + film.expect+ "</td>" +
+                                    "<td>未上映</td>"+
+                                    " <td> <a href=''>删除</a></td>"
+                                "<tr>"
+                                $("tbody").append(obj);
+                            }
+
+
+                        }
+                    }
+
+                }
+            )
+
+
+
+        })
+
         //页面加载显示市区异步请求
             $.post(
               "${pageContext.request.contextPath}/address/showcity",
@@ -423,9 +671,8 @@
                     fileElementId : "filecinema",
                     dataType : 'text',
                     success : function(data) {
-                        alert(data)
+                        $(".imgurl").val(data)
                         $(".cinemaphoto").attr("src","${pageContext.request.contextPath}"+data);
-                        $(".cinemaPhotoUrl").val(data)
                     }
                 }
             )
@@ -435,14 +682,13 @@
     function choseadministrative(){
         var url="${pageContext.request.contextPath}/address/showadministrative";
         var parentid =$(".city option:selected").val();
-        alert(parentid)
         $.get(
             url,
             "parentid="+parentid,
             function(data){
                 $(".administrative").empty();
-                var noObj = $("<option/>").val(-1).text('请选择行政区');
-                $("administrative").html(noObj);
+                var noObj = $("<option/>").val(0).text('请选择行政区');
+                $(".administrative").html(noObj);
                 if(data != null && data.length > 0){
                     for(var i = 0 ; i < data.length;i++){
                         var administrative = data[i];

@@ -2,6 +2,9 @@ package cn.mapper;
 
 import cn.entity.CinemaBand;
 
+import java.util.List;
+
+
 public interface CinemaBandMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +17,8 @@ public interface CinemaBandMapper {
     int updateByPrimaryKeySelective(CinemaBand record);
 
     int updateByPrimaryKey(CinemaBand record);
+
+    List<CinemaBand> selectAll();
+
+    List<CinemaBand> selectByAddressId(Integer id);
 }

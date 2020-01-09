@@ -34,6 +34,7 @@
     from t_film
     order by rend() limit 8
   </select>
+<!--  后台查询所有用户信息-->
   <select id="selectAllfilm" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -47,12 +48,15 @@
     from t_film
     <where>
       <if test="filmname != null and filmname != '' ">
-        filmName = #{filmname}
+        filmName like concat('%',#{filmname},'%')
       </if>
       <if test="filmtype != null and filmtype != '' ">
-        and filmType=#{filmtype}
+        and filmType like concat('%',#{filmtype},'%')
       </if>
       <if test="state != null and state != '' ">
+        and state=#{state}
+      </if>
+      <if test="state == 0  ">
         and state=#{state}
       </if>
     </where>

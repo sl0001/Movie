@@ -62,4 +62,14 @@ public class UserServiceImpl implements UserService {
         return orderItemMapper.selectByOrderIds(oIds);
     }
 
+    @Override
+    public Integer editOrderStatus(Order order) {
+        return orderMapper.updateByPrimaryKeySelective(order);
+    }
+    @Override
+    public List<User> getByName(String name) {
+        return userMapper.selectByName(name);
+    }
+
+
 }

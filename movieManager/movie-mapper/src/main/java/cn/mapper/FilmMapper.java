@@ -42,6 +42,7 @@ public interface FilmMapper {
 
     List<Film> selectByCondition(@Param("type") String type, @Param("area") String area, @Param("time") String time);
 
+    //后台查询所有的电影信息
     List<Film> selectAllfilm();
     //动态查询电影信息（电影名，电影类型，电影状态）
     List<Film> selectByCondition2(@Param("filmname") String filmname, @Param("filmtype") String filmtype, @Param("state") Integer state);

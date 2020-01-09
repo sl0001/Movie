@@ -1,6 +1,7 @@
 package cn.controller;
 
 import cn.entity.Order;
+import cn.entity.User;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
@@ -8,6 +9,7 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,12 +31,14 @@ public class PayController {
         //实例化客户端,填入所需参数
         AlipayClient alipayClient = new DefaultAlipayClient(GATEWAY_URL, APP_ID, APP_PRIVATE_KEY, FORMAT, CHARSET, ALIPAY_PUBLIC_KEY, SIGN_TYPE);
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
+        Order order = (Order) req.getSession().getAttribute("order");
         //在公共参数中设置回跳和通知地址
+            //同步
         request.setReturnUrl("http://localhost:8080/"+req.getContextPath()+"/film/main");
+            //异步
         request.setNotifyUrl("http://localhost:8080/"+req.getContextPath()+"/film/main");
         //根据订单编号,查询订单相关信息
         //商户订单号，商户网站订单系统中唯一订单号，必填
-        Order order = (Order) req.getSession().getAttribute("order");
         String out_trade_no = order.getOrderNum();
         //付款金额，必填
         String total_amount = order.getMoney().toString();

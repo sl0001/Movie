@@ -28,7 +28,22 @@
     <include refid="Base_Column_List" />
     from t_cinema
   </select>
-  <select id="selectByName" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+<!--  前台根据电影品牌和地区查询数据-->
+  <select id="selectByNameAddressId"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_cinema
+    <trim prefix="where" suffixOverrides="and">
+        <if test="name != null || name != ''">
+          cinemaName like concat('%',#{name,jdbcType=VARCHAR},'%') and
+        </if>
+        <if test="addressId != null || addressId != ''">
+          addressId = addressId
+        </if>
+    </trim>
+  </select>
+<!--  后台根据电影名字模糊查询数据信息-->
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from t_cinema

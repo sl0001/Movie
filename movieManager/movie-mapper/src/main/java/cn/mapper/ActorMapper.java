@@ -13,9 +13,11 @@ public interface ActorMapper {
 
     Actor selectByPrimaryKey(Integer id);
 
-    List<Actor> selectByIds(List<Integer> ids);
-
     int updateByPrimaryKeySelective(Actor record);
 
     int updateByPrimaryKey(Actor record);
+
+    //前台查询演员图集列表
+    List<Actor> selectByIds(List<Integer> ids);
+
 }

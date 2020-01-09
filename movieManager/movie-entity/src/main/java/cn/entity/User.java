@@ -17,6 +17,26 @@ public class User {
 
     private String phone;
 
+    private String bir;
+
+    public String getBir() {
+        return bir;
+    }
+
+    public void setBir(String bir) {
+        this.bir = bir;
+    }
+    public User(Integer id, String username, String pwd, String sex, Date birthday, String animation, String phone, String bir) {
+        this.id = id;
+        this.username = username;
+        this.pwd = pwd;
+        this.sex = sex;
+        this.birthday = birthday;
+        this.animation = animation;
+        this.phone = phone;
+        this.bir = bir;
+    }
+
     public User(Integer id, String username, String pwd, String sex, Date birthday, String animation, String phone) {
         this.id = id;
         this.username = username;

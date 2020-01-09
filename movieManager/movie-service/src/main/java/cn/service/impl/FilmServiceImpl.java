@@ -71,11 +71,17 @@ public class FilmServiceImpl implements FilmService {
 
     //后台查询全部信息
     @Override
-    public List<Film> getAllFilms() {
+    public List<Film> getAllFilms()
+    {
         return filmMapper.selectAllfilm();
     }
     @Override
     public List<Film> queryByCondition2(String filmname,String filmtype,Integer state) {
         return filmMapper.selectByCondition2(filmname,filmtype,state);
+    }
+    //后台添加电影信息
+    @Override
+    public Integer addFilm(Film film) {
+        return filmMapper.insertSelective(film);
     }
 }

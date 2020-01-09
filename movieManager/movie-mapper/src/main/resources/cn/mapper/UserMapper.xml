@@ -130,5 +130,10 @@
       phone = #{phone,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+<!--  后台 根据用户姓名模糊查询-->
+  <select id="selectByName" parameterType="java.lang.String" resultType="cn.entity.User">
+        select * from t_user where userName like concat('%',#{name,jdbcType=VARCHAR},'%')
+    </select>
+
 
 </mapper>

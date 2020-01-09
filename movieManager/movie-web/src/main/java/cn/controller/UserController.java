@@ -20,6 +20,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.*;
 @Controller
 @RequestMapping("/user")
@@ -90,4 +91,33 @@ public class UserController {
         return false;
     }
 
+    @RequestMapping("/allUser")
+    @ResponseBody
+    public List<User> getAllUser(){
+        List<User> users = us.getAllUsers();
+        List<User> users1= new ArrayList<User>();
+
+        for (User user:users){
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String bir =  sdf.format(user.getBirthday());
+            user.setBir(bir);
+            users1.add(user);
+        }
+        return users1;
+    }
+
+    @RequestMapping("/selectByName")
+    @ResponseBody
+    public List<User> selectByName(String name){
+        List<User> users = us.getByName(name);
+        List<User> users2= new ArrayList<User>();
+
+        for (User user:users){
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+            String bir =  sdf.format(user.getBirthday());
+            user.setBir(bir);
+            users2.add(user);
+        }
+        return users2;
+    }
 }

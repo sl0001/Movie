@@ -18,7 +18,7 @@
             $("#msgBtn").attr("disabled", true);
             $("#phone").blur(function () {
                 var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
-                if(myreg.test($(this).val())){
+                if(myreg.cn.test($(this).val())){
                     $.ajax({
                         url:"${pageContext.request.contextPath}/user/rePhone",
                         type: "POST",

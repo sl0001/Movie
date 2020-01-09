@@ -30,7 +30,17 @@ public class Film {
 
     private Integer state;
 
-    public Film(Integer id, String filmname, String filmtype, String filmarea, Date showtime, Integer duration, String posterurl, String filmintro, String language, BigDecimal boxoffice, BigDecimal filmscore, BigDecimal expect,Integer state) {
+    private String time; //字符串类型的时间 用于字符串和date之间的转换
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public Film(Integer id, String filmname, String filmtype, String filmarea, Date showtime, Integer duration, String posterurl, String filmintro, String language, BigDecimal boxoffice, BigDecimal filmscore, BigDecimal expect, Integer state) {
         this.id = id;
         this.filmname = filmname;
         this.filmtype = filmtype;

@@ -24,4 +24,9 @@ public interface UserService {
 
     List<OrderItem> getByOrderIds(List<Integer> oIds);
 
+    Integer editOrderStatus(Order order);
+
+    //根据姓名模糊查询
+    List<User> getByName(String name);
+
 }

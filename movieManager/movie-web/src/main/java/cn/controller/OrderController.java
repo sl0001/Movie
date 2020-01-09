@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -21,7 +24,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/order")
-@SessionAttributes(value = {"filmON","cinemas","rooms","cinemaId","records","roomId","film","cinema","room","record","time","order"})
+@SessionAttributes(value = {"filmON","cinemas","rooms","cinemaId","records","roomId","film","cinema","room","record","time","order","userUP"})
 public class OrderController {
 
     @Autowired
@@ -90,12 +93,14 @@ public class OrderController {
         for (Order o:list) {
             oIds.add(o.getId());
         }
+        if(oIds.size()>0){
         List<OrderItem> orderItems = us.getByOrderIds(oIds);
         List<String> seats = new ArrayList<String>();
+
         for (OrderItem oi:orderItems) {
             seats.add('"'+oi.getSeatinfo()+'"');
         }
-        model.addAttribute("seats",seats);
+        model.addAttribute("seats",seats);}
         model.addAttribute("film",film);
         model.addAttribute("cinema",cinema);
         model.addAttribute("room",room);
@@ -106,7 +111,8 @@ public class OrderController {
 
     @RequestMapping("/addOrder")
     @ResponseBody
-    public boolean addOrder(String infos, String total,Model model,HttpSession session) {
+    public boolean addOrder(String infos, String total, Model model, HttpSession session,
+                            HttpServletResponse httpServletResponse) {
         User user = (User) session.getAttribute("userUP");
         Record record = (Record) session.getAttribute("record");
         Room room = (Room) session.getAttribute("room");
@@ -118,7 +124,7 @@ public class OrderController {
         String seatInfo = infos;
         Double p = Double.parseDouble(total);
         BigDecimal price = BigDecimal.valueOf(p);
-        Integer status = 1;
+        Integer status = 2;
         Date buyTime = new Date();
         String phone = user.getPhone();
         String orderNum = NumberUtil.createCodeNum();
@@ -132,7 +138,32 @@ public class OrderController {
             OrderItem orderItem = new OrderItem(order.getId(),room.getRoomname(),ticketInfo,cinema.getCinemaname(),seats.get(key));
             us.addOrderItem(orderItem);
         }
+        Cookie cookie = new Cookie("orderId",order.getId().toString());
+        Cookie cookie1 = new Cookie("userPhone",user.getPhone());
+        cookie.setMaxAge(60*7);
+        cookie1.setMaxAge(60*7);
+        httpServletResponse.addCookie(cookie);
+        httpServletResponse.addCookie(cookie1);
         model.addAttribute("order",order);
         return true;
+    }
+    @RequestMapping("/updateOrder")
+    public void updateStatus(Model model, HttpServletRequest req){
+        Cookie[] cookies = req.getCookies();
+        String orderId = "";
+        String userPhone = "";
+        for (Cookie c:cookies) {
+            if (c.getName().equals("orderId")){
+                orderId = c.getValue();
+            }
+            if (c.getName().equals("userPhone")){
+                userPhone = c.getValue();
+            }
+        }
+        Order order = us.getOrderByOrderId(Integer.getInteger(orderId));
+        User user = us.getByPhone(userPhone);
+        order.setStatus(1);
+        us.editOrderStatus(order);
+        model.addAttribute("userUP",user);
     }
 }

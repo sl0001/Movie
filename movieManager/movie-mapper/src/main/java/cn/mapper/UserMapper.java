@@ -20,4 +20,8 @@ public interface UserMapper {
     List<User> selectAll();
 
     User selectByPhone(String phone);
+
+    //根据姓名模糊查询
+    List<User> selectByName(String name);
+
 }

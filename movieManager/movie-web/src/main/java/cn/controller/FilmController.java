@@ -2,6 +2,7 @@ package cn.controller;
 
 import cn.entity.*;
 import cn.service.ActorService;
+import cn.service.AddressService;
 import cn.service.CinemaService;
 import cn.service.FilmService;
 import cn.utils.DateUtil;
@@ -16,11 +17,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
 @RequestMapping(value = "/film")
-@SessionAttributes(value = {"showTimes","lessTimes","offices","expects","scores","filmON","records","cinemaId"})
+@SessionAttributes(value =
+            {"showTimes","lessTimes","offices","expects","scores","filmON","records","cinemaId","addressList"})
 public class FilmController {
 
     @Autowired
@@ -29,6 +33,8 @@ public class FilmController {
     private CinemaService cinemaService;
     @Autowired
     private ActorService actorService;
+    @Autowired
+    private AddressService addressService;
     //查看一部电影的详细信息（图集，演员。。。）
     @RequestMapping("/filmInfo")
     public String filmInfo(Model model,String filmName){
@@ -45,6 +51,8 @@ public class FilmController {
     public String cinemaInfo(Model model){
         List<Cinema> cinemas = cinemaService.getAllCinema();
         model.addAttribute("cinemas",cinemas);
+        List<Address> addressParents = addressService.getAllParents();
+        model.addAttribute("addressList",addressParents);
         return "ChooseCinema";
     }
     @RequestMapping("/recordInfo")
@@ -89,18 +97,50 @@ public class FilmController {
 
     //后台查询页面 查询所有
     @RequestMapping("/allFilms")
-    public String allFilms(Model model){
+    @ResponseBody
+    public List<Film> allFilms(){
         List<Film> allFilm=filmService.getAllFilms();
-        model.addAttribute("films",allFilm);
-        return "FilmBackstage";
+        List<Film> films =new ArrayList<Film>();
+        for (Film film:allFilm){
+            SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+            String time=sdf.format(film.getShowtime());
+            film.setTime(time);
+            films.add(film);
+        }
+        return films;
     }
     //后台查询
     @RequestMapping("/filmsByCondition2")
-    public String getFilmsByCondition2(String filmname, String filmtype, Integer state, Model model){
+    @ResponseBody
+    public List<Film> getFilmsByCondition2(String filmname, String filmtype, Integer state){
+        System.out.println(filmname);
+        System.out.println(filmtype);
+        System.out.println(state);
+        List<Film> selectfilms=filmService.queryByCondition2(filmname,filmtype,state);
+        List<Film> films =new ArrayList<Film>();
+        for (Film film:selectfilms){
+            SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+            String time=sdf.format(film.getShowtime());
+            film.setTime(time);
+            films.add(film);
+        }
+        return films;
+    }
 
-        List<Film> films=filmService.queryByCondition2(filmname,filmtype,state);
-        model.addAttribute("films",films);
+    @RequestMapping("/addFilm")
+    public String addFilm(Film film) throws ParseException {
+        String time= film.getTime();
+        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+        Date showtime=sdf.parse(time);
+        film.setShowtime(showtime);
+        filmService.addFilm(film);
         return "FilmBackstage";
     }
+
+
+
+
+
+
 
 }

@@ -12,8 +12,6 @@ public interface FilmService {
 
 
     List<Film> getAllFilm();
-    //后台查询全部信息
-    List<Film> getAllFilms();
 
     Film getFilmByName(String name);
 
@@ -34,7 +32,13 @@ public interface FilmService {
     List<Film> getByScore();
 
     List<Film> getFilmByCondition(String type, String area, String time);
+    //后台查询全部信息
+    List<Film> getAllFilms();
     //动态查询电影信息（电影名，电影类型，电影状态）
     List<Film> queryByCondition2(String filmname,String filmtype,Integer state);
+
+    //后台添加电影数据
+    Integer addFilm(Film film);
+
 
 }
