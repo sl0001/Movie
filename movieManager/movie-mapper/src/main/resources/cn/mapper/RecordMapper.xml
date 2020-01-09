@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mapper.RecordMapper">
+  <resultMap id="BaseResultMap" type="cn.entity.Record">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="filmId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="cinemaId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="roomId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="startTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="endTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="totalSeat" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="sellNum" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="profit" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+    </constructor>
+    <association property="room" select="cn.mapper.RoomMapper.selectByPrimaryKey" column="roomId"></association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, filmId, cinemaId, roomId, startTime, endTime, totalSeat, sellNum, profit
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_record
+    <trim prefix="where" suffixOverrides="and">
+      <if test="filmId != null">
+        filmId = #{filmId} and
+      </if>
+      <if test="cinemaId != null">
+        cinemaId = #{cinemaId} and
+      </if>
+      <if test="roomId != null">
+        roomId = #{roomId}
+      </if>
+    </trim>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.entity.Record">
+    insert into t_record (id, filmId, cinemaId, 
+      roomId, startTime, endTime, 
+      totalSeat, sellNum, profit
+      )
+    values (#{id,jdbcType=INTEGER}, #{filmid,jdbcType=INTEGER}, #{cinemaid,jdbcType=INTEGER}, 
+      #{roomid,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{totalseat,jdbcType=INTEGER}, #{sellnum,jdbcType=INTEGER}, #{profit,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.entity.Record">
+    insert into t_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="filmid != null">
+        filmId,
+      </if>
+      <if test="cinemaid != null">
+        cinemaId,
+      </if>
+      <if test="roomid != null">
+        roomId,
+      </if>
+      <if test="starttime != null">
+        startTime,
+      </if>
+      <if test="endtime != null">
+        endTime,
+      </if>
+      <if test="totalseat != null">
+        totalSeat,
+      </if>
+      <if test="sellnum != null">
+        sellNum,
+      </if>
+      <if test="profit != null">
+        profit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="filmid != null">
+        #{filmid,jdbcType=INTEGER},
+      </if>
+      <if test="cinemaid != null">
+        #{cinemaid,jdbcType=INTEGER},
+      </if>
+      <if test="roomid != null">
+        #{roomid,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalseat != null">
+        #{totalseat,jdbcType=INTEGER},
+      </if>
+      <if test="sellnum != null">
+        #{sellnum,jdbcType=INTEGER},
+      </if>
+      <if test="profit != null">
+        #{profit,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.entity.Record">
+    update t_record
+    <set>
+      <if test="filmid != null">
+        filmId = #{filmid,jdbcType=INTEGER},
+      </if>
+      <if test="cinemaid != null">
+        cinemaId = #{cinemaid,jdbcType=INTEGER},
+      </if>
+      <if test="roomid != null">
+        roomId = #{roomid,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        startTime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        endTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalseat != null">
+        totalSeat = #{totalseat,jdbcType=INTEGER},
+      </if>
+      <if test="sellnum != null">
+        sellNum = #{sellnum,jdbcType=INTEGER},
+      </if>
+      <if test="profit != null">
+        profit = #{profit,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

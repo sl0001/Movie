@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mapper.CinemaMapper">
+  <resultMap id="BaseResultMap" type="cn.entity.Cinema">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="cinemaName" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="tel" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="addressId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="intro" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="imgUrl" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+
+    <collection property="rooms" select="cn.mapper.RoomMapper.selectAllByCinemaId" column="id"></collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cinemaName, address, tel, addressId, intro, imgUrl
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_cinema
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_cinema
+  </select>
+<!--  前台根据电影品牌和地区查询数据-->
+  <select id="selectByNameAddressId"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_cinema
+    <trim prefix="where" suffixOverrides="and">
+        <if test="name != null || name != ''">
+          cinemaName like concat('%',#{name,jdbcType=VARCHAR},'%') and
+        </if>
+        <if test="addressId != null || addressId != ''">
+          addressId = addressId
+        </if>
+    </trim>
+  </select>
+<!--  后台根据电影名字模糊查询数据信息-->
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_cinema
+    where cinemaName like concat('%',#{name,jdbcType=VARCHAR},'%')
+  </select>
+  <select id="selectByAddressId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_cinema
+    where addressId = #{addressId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_cinema
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.entity.Cinema">
+    insert into t_cinema (id, cinemaName, address, 
+      tel, addressId, intro, 
+      imgUrl)
+    values (#{id,jdbcType=INTEGER}, #{cinemaname,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{addressid,jdbcType=INTEGER}, #{intro,jdbcType=VARCHAR}, 
+      #{imgurl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.entity.Cinema">
+    insert into t_cinema
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cinemaname != null">
+        cinemaName,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="addressid != null">
+        addressId,
+      </if>
+      <if test="intro != null">
+        intro,
+      </if>
+      <if test="imgurl != null">
+        imgUrl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cinemaname != null">
+        #{cinemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="addressid != null">
+        #{addressid,jdbcType=INTEGER},
+      </if>
+      <if test="intro != null">
+        #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null">
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.entity.Cinema">
+    update t_cinema
+    <set>
+      <if test="cinemaname != null">
+        cinemaName = #{cinemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="addressid != null">
+        addressId = #{addressid,jdbcType=INTEGER},
+      </if>
+      <if test="intro != null">
+        intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null">
+        imgUrl = #{imgurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.entity.Cinema">
+    update t_cinema
+    set cinemaName = #{cinemaname,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      addressId = #{addressid,jdbcType=INTEGER},
+      intro = #{intro,jdbcType=VARCHAR},
+      imgUrl = #{imgurl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>
