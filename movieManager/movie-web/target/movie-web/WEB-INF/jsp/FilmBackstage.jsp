@@ -52,7 +52,7 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <ul class="layui-nav layui-nav-tree"  lay-filter="cn.test">
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">所有商品</a>
                     <dl class="layui-nav-child">
@@ -77,7 +77,7 @@
     </div>
 
     <div class="layui-body">
-        <div class="layui-tab" lay-filter="test">
+        <div class="layui-tab" lay-filter="cn.test">
             <ul class="layui-tab-title">
                 <li class="layui-this" lay-id="11">添加电影</li>
                 <li lay-id="22" class="addcinema">添加影院</li>
@@ -493,11 +493,11 @@
         });
 
         //Hash地址的定位
-        var layid = location.hash.replace(/^#test=/, '');
-        element.tabChange('test', layid);
+        var layid = location.hash.replace(/^#cn.test=/, '');
+        element.tabChange('cn.test', layid);
 
-        element.on('tab(test)', function(elem){
-            location.hash = 'test='+ $(this).attr('lay-id');
+        element.on('tab(cn.test)', function(elem){
+            location.hash = 'cn.test='+ $(this).attr('lay-id');
         });
 
     });

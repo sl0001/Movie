@@ -1,6 +1,7 @@
 package cn.service;
 
 import cn.entity.Cinema;
+import cn.entity.CinemaBand;
 import cn.entity.Record;
 import cn.entity.Room;
 
@@ -10,7 +11,7 @@ public interface CinemaService {
 
     List<Cinema> getAllCinema();
 
-    List<Cinema> getCinemaByName(String name);
+    List<Cinema> getCinemaByName(String name,Integer addressId);
 
     List<Cinema> getCinemaByAddressId(Integer addressId);
 
@@ -25,4 +26,8 @@ public interface CinemaService {
     Record getRecordById(Integer id);
 
     List<Record> getByInfo(Integer filmId, Integer cinemaId, Integer roomId);
+
+    List<CinemaBand> getAll();
+
+    List<CinemaBand> getByAddressId(Integer id);
 }

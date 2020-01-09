@@ -32,7 +32,14 @@
     select
     <include refid="Base_Column_List" />
     from t_cinema
-    where cinemaName like concat('%',#{name,jdbcType=VARCHAR},'%')
+    <trim prefix="where" suffixOverrides="and">
+        <if test="name != null || name != ''">
+          cinemaName like concat('%',#{name,jdbcType=VARCHAR},'%') and
+        </if>
+        <if test="addressId != null || addressId != ''">
+          addressId = addressId
+        </if>
+    </trim>
   </select>
   <select id="selectByAddressId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select

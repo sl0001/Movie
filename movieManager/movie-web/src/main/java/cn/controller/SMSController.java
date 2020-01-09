@@ -17,6 +17,7 @@ public class SMSController {
         Integer num = (int)((Math.random()*9+1)*100000);
         model.addAttribute("num",num);
         String msg = "验证码："+num;
+        //短信条数暂无修改成Ajax提示
        /* Integer result = client.sendMsgUtf8(msg,phone);
         if(result>0){
             System.out.println("UTF8成功发送条数=="+result);

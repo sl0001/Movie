@@ -23,6 +23,12 @@
     from t_address
     where parentId = #{parentId,jdbcType=INTEGER}
   </select>
+  <select id="selectAllParents" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_address
+    where parentId = 0
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_address
     where id = #{id,jdbcType=INTEGER}

@@ -16,4 +16,14 @@ public class AddressServiceImpl implements AddressService {
     public List<Address> selelctByParansId(Integer id) {
         return  addressMapper.selelctByParansId(id);
     }
+
+    @Override
+    public List<Address> getAllParents() {
+        return addressMapper.selectAllParents();
+    }
+
+    @Override
+    public Address getAddressById(Integer id) {
+        return addressMapper.selectByPrimaryKey(id);
+    }
 }

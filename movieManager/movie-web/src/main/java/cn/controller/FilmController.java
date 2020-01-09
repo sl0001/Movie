@@ -2,6 +2,7 @@ package cn.controller;
 
 import cn.entity.*;
 import cn.service.ActorService;
+import cn.service.AddressService;
 import cn.service.CinemaService;
 import cn.service.FilmService;
 import cn.utils.DateUtil;
@@ -20,7 +21,8 @@ import java.util.*;
 
 @Controller
 @RequestMapping(value = "/film")
-@SessionAttributes(value = {"showTimes","lessTimes","offices","expects","scores","filmON","records","cinemaId"})
+@SessionAttributes(value =
+            {"showTimes","lessTimes","offices","expects","scores","filmON","records","cinemaId","addressList"})
 public class FilmController {
 
     @Autowired
@@ -29,6 +31,8 @@ public class FilmController {
     private CinemaService cinemaService;
     @Autowired
     private ActorService actorService;
+    @Autowired
+    private AddressService addressService;
     //查看一部电影的详细信息（图集，演员。。。）
     @RequestMapping("/filmInfo")
     public String filmInfo(Model model,String filmName){
@@ -45,6 +49,8 @@ public class FilmController {
     public String cinemaInfo(Model model){
         List<Cinema> cinemas = cinemaService.getAllCinema();
         model.addAttribute("cinemas",cinemas);
+        List<Address> addressParents = addressService.getAllParents();
+        model.addAttribute("addressList",addressParents);
         return "ChooseCinema";
     }
     @RequestMapping("/recordInfo")

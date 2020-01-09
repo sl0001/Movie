@@ -19,4 +19,6 @@ public interface AddressMapper {
 
     //根据父级id查询信息
     List<Address> selelctByParansId(Integer id);
+
+    List<Address> selectAllParents();
 }

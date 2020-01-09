@@ -24,4 +24,6 @@ public interface UserService {
 
     List<OrderItem> getByOrderIds(List<Integer> oIds);
 
+    Integer editOrderStatus(Order order);
+
 }

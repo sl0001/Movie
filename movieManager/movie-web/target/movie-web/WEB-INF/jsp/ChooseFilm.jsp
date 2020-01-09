@@ -52,7 +52,7 @@
             <a href=""style="color: #0C0C0C">商城</a>
         </li>
         <li class="layui-nav-item">
-            <c:if test="${user eq null or user eq ''}">
+            <c:if cn.test="${user eq null or user eq ''}">
                 <a href="javascript:; ">
                     <img src="https://p0.meituan.net/movie/7dd82a16316ab32c8359debdb04396ef2897.png" class="layui-nav-img">
                     &nbsp;
@@ -61,7 +61,7 @@
                     <dd><a href="${pageContext.request.contextPath}/loginUser">登录</a></dd>
                 </dl>
             </c:if>
-            <c:if test="${user ne null and user ne ''}">
+            <c:if cn.test="${user ne null and user ne ''}">
                 <a href="javascript:;" style="color: #0C0C0C">
                     <img src="https://p0.meituan.net/movie/7dd82a16316ab32c8359debdb04396ef2897.png" class="layui-nav-img">
                     &nbsp;

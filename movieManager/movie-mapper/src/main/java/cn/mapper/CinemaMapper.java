@@ -1,6 +1,7 @@
 package cn.mapper;
 
 import cn.entity.Cinema;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface CinemaMapper {
 
     List<Cinema> selectAll();
 
-    List<Cinema> selectByName(String name);
+    List<Cinema> selectByName(@Param("name") String name, @Param("addressId") Integer addressId);
 
     List<Cinema> selectByAddressId(Integer addressId);
 }
